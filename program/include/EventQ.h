@@ -26,7 +26,6 @@ public:
     // TODO: add remove function
     int RemoveEvent();
     
-
 private:
     int q_size;
     int event_num;
