@@ -37,6 +37,7 @@ public:
 private:
     mid_t next_mid;
     std::vector<midTableEntry> m_table;
+    GNS_IdAllocator<mid_t> id_allocator;
 };
 
 // A ModelList stores all the models and model stacks 

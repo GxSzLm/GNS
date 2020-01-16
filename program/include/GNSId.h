@@ -1,35 +1,38 @@
 #pragma once
-#include "PublicDefine.h"
 
+#include <iostream>
 #include <vector>
 
-class GNS_IdAllocator 
+using std::cout;
+using std::endl;
+
+using gns_id_t = int;
+using eid_t = gns_id_t;
+using mid_t = gns_id_t;
+using pkid_t = gns_id_t;
+const int GNS_ID32_max = 0x7fffffff;
+const int GNS_ID32_min = 0x0;
+const int GNS_ID32_init = 0xffffffff;
+inline bool idGNSId32(int id) {
+    return id >= GNS_ID32_min && id <= GNS_ID32_max;
+}
+
+template <typename _id_t>
+class GNS_IdAllocator
 {
 public:
-    struct id_pool {
-        std::string name;
-        gns_id_t next_id;
-    };
-
     GNS_IdAllocator() {
-        id_pool midpool = { "mid", GNS_ID32_min };
-        id_pool eidpool = { "eid", GNS_ID32_min };
-        id_pool pkidpool = { "pkid", GNS_ID32_min };
-        idPools.push_back(midpool);
-        idPools.push_back(eidpool);
-        idPools.push_back(pkidpool);
+        next_id = GNS_ID32_min;
     }
 
-    gns_id_t getNextId(std::string poolname) {
-        for (auto &c : idPools) {
-            if (c.name == poolname) {
-                return c.next_id++;
-            }
-            // assert here maybe
-            std::cout << "ERROR: Wrong id pool name" << std::endl;
+    _id_t getNewId() {
+        if (idGNSId32(next_id + 1)) {
+            return next_id;
         }
+        cout << "ID ALLOC ERROR. OVERFLOW." << endl;
+        return (_id_t)-1;  // questionable
     };
 
 private:
-    std::vector<id_pool> idPools;
+    _id_t next_id;
 };

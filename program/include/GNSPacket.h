@@ -1,13 +1,19 @@
 #pragma once
+#include "PublicDefine.h"
+#include "GNSId.h"
 
 #include <string>
 #include <vector>
+
+using pkid_t = gns_id_t;
 
 class GNS_Packet 
 {
 public:
     GNS_Packet();
     ~GNS_Packet();
+
+    pkid_t pkid;
 
     // extra packet information. can be used to simulate 
     // ip layer behavior even when there's not one.

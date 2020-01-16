@@ -1,33 +1,33 @@
 #pragma once
 
-#include "PublicDefine.h"
+#include "GNSId.h"
 
 #include <string>
 #include <vector>
 
 class GNS_Scenario;
-
 class GNS_Event;
+
+using mid_t = gns_id_t;
 
 class GNS_Model
 {
 public:
-    GNS_Model() = default;
     GNS_Model(GNS_Scenario *cur_scn);
     ~GNS_Model();
 
     // Mid: Model id
-    mid_t Mid;
+    mid_t mid;
 
-    // Events this model could handle
-    std::vector<eid_t> Events;
+    // Event type this model could handle
+    std::vector<int> EventType;
     
     // model name string
     std::string Name;
 
     // stack flag
     bool isAStack;
-
+    
     // pointer to a parameter struct
     void * Params;
 
@@ -38,6 +38,5 @@ public:
     virtual void HandleEvent(GNS_Event * event);
 
 private:
-    void check_mid_overflow();
     void model_init();
 };

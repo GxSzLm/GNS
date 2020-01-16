@@ -7,7 +7,6 @@ class GNS_Scenario;
 class GNS_ModelStack : public GNS_Model
 {
 public:
-    GNS_ModelStack() = default;
     GNS_ModelStack(GNS_Scenario *cur_scn);
     ~GNS_ModelStack();
 

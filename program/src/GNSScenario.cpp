@@ -22,7 +22,7 @@ GNS_Scenario::~GNS_Scenario() {
 
 int GNS_Scenario::SimInit() {
     nodes_init();
-    scn_models_init();
+    scn_models_init();2/ 
 }
 
 int GNS_Scenario::SimRun() {
@@ -54,7 +54,7 @@ void GNS_Scenario::nodes_init() {
     auto r2 = new TestRepeater(this);
     modelList->AddModel(r2);
 
-    auto trig = GenerateNewEvent(r1->Mid, r2->Mid, 0);
+    auto trig = GenerateNewEvent(r1->mid, r2->mid, 0);
     e_queue->AddEvent(trig);
 }
 

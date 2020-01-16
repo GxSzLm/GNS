@@ -58,10 +58,10 @@ int GNS_ModelList::AddModelStack(GNS_ModelStack *new_stack) {
         std::cout << "WARNING: THIS MODEL STACK SEEMS TO BE A PURE MODEL" << std::endl;
     }
     // get mid for stack
-    new_stack->Mid = midTable.newMID(MODEL_STACK);
+    new_stack->mid = midTable.newMID(MODEL_STACK);
     // insert into model list
     ModelStackListEntry new_entry;
-    new_entry.stack_id = new_stack->Mid;
+    new_entry.stack_id = new_stack->mid;
     new_entry.model_stack = new_stack;
     AllStackList.push_back(new_entry);
     return 0;
@@ -77,7 +77,7 @@ int GNS_ModelList::AddModelToStack(GNS_Model *new_model, mid_t stack_id) {
         std::cout << "WARNING: THIS MODEL SEEMS TO BE A MODEL STACK" << std::endl;
     }
     // get mid for model
-    new_model->Mid = midTable.newMID(MODEL);
+    new_model->mid = midTable.newMID(MODEL);
     // insert into the stack in the stack list
     auto st = GetStack(stack_id);
     if (st == nullptr) {
@@ -87,7 +87,7 @@ int GNS_ModelList::AddModelToStack(GNS_Model *new_model, mid_t stack_id) {
     st->AddModel(new_model);
     // insert into model list
     ModelListEntry new_entry;
-    new_entry.model_id = new_model->Mid;
+    new_entry.model_id = new_model->mid;
     new_entry.stack_id = stack_id;
     new_entry.model = new_model;
     
@@ -105,10 +105,10 @@ int GNS_ModelList::AddModel(GNS_Model *new_model) {
         std::cout << "WARNING: THIS MODEL SEEMS TO BE A MODEL STACK" << std::endl;
     }
     // get mid for model
-    new_model->Mid = midTable.newMID(MODEL);
+    new_model->mid = midTable.newMID(MODEL);
     // insert into model list
     ModelListEntry new_entry;
-    new_entry.model_id = new_model->Mid;
+    new_entry.model_id = new_model->mid;
     new_entry.stack_id = 0;
     new_entry.model = new_model;
     
@@ -117,20 +117,12 @@ int GNS_ModelList::AddModel(GNS_Model *new_model) {
 }
 
 mid_t mid_table_t::newMID(ModelType type) {
-    if (next_mid <= GNS_ID32_max) {
-        int mid = next_mid++;
-        midTableEntry entry;
-        entry.mid = mid;
-        entry.type = type;
-        m_table.push_back(entry);
+    mid_t newmid = id_allocator.getNewId();
 
-        return mid;
-    }
-    else {
-        std::cout << "MODEL ID OVERFLOW" << std::endl;
-        exit(-1);
-        return -1;
-    }
+    midTableEntry entry = {newmid, type};
+    m_table.push_back(entry);
+
+    return newmid;
 }
 
 ModelType mid_table_t::getMidType(mid_t mid) {
