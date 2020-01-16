@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-GNS_Event::GNS_Event(int src, int dst) : srcNode(src), dstNode(dst) {
+GNS_Event::GNS_Event(mid_t src, mid_t dst) : srcNode(src), dstNode(dst) {
     eid = GNS_ID32_init;
     EventType = GNS_UNKNOWN;
 }

@@ -1,9 +1,42 @@
 #pragma once
 
+#include "GNSId.h"
+
 #include <list>
 
 class GNS_Event;
 class GNS_Scenario;
+
+class eid_table_t
+{
+public:
+    eid_table_t() { 
+        next_eid = GNS_ID32_min; 
+    }
+    //
+    struct eidTableEntry
+    {
+        eid_t eid;
+    };
+
+    // apply for a new eid
+    eid_t NewEid() {
+        eid_t new_eid = next_eid++;
+        if (!isGNSId(next_eid)) {
+            cout << "error: id overflow." << endl;
+            exit(0);
+        }
+
+        return new_eid;
+    }
+
+    // return the model's type (a stack or not)
+    // ModelType getMidType(mid_t mid);
+
+private:
+    eid_t next_eid;
+    std::vector<eidTableEntry> e_table;
+};
 
 class EventQ final
 {
@@ -31,4 +64,5 @@ private:
     int event_num;
 
     std::list<GNS_Event *> e_queue;
+    eid_table_t eidTable;
 };

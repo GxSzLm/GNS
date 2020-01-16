@@ -17,7 +17,7 @@ GNS_ModelList::~GNS_ModelList() {
 }
 
 GNS_Model *GNS_ModelList::GetModel(mid_t model_id) {
-    if (idGNSId32(model_id)) {
+    if (isGNSId(model_id)) {
         for (auto &e : AllModelList) {
             if (e.model_id == model_id) {
                 return e.model;
@@ -33,7 +33,7 @@ GNS_Model *GNS_ModelList::GetModel(mid_t model_id) {
 }
 
 GNS_ModelStack *GNS_ModelList::GetStack(mid_t stack_id) {
-    if (idGNSId32(stack_id)) {
+    if (isGNSId(stack_id)) {
         for (auto &e : AllStackList) {
             if (e.stack_id == stack_id) {
                 return e.model_stack;
@@ -117,10 +117,17 @@ int GNS_ModelList::AddModel(GNS_Model *new_model) {
 }
 
 mid_t mid_table_t::newMID(ModelType type) {
-    mid_t newmid = m_table.back();
+    mid_t newmid = next_mid++;
 
     midTableEntry entry = {newmid, type};
     m_table.push_back(entry);
+
+    // id overflows
+    if (!isGNSId(next_mid)) {
+        // dont handle for now
+        cout << "error: message id overflow." << endl;
+        exit(0);
+    }
 
     return newmid;
 }

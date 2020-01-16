@@ -30,6 +30,7 @@ int EventQ::AddEvent(GNS_Event * new_event) {
         }
     }
     --iter;
+    new_event->eid = eidTable.NewEid();
     e_queue.insert(iter, new_event);
     ++event_num;
 
