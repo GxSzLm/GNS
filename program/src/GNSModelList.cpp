@@ -117,7 +117,7 @@ int GNS_ModelList::AddModel(GNS_Model *new_model) {
 }
 
 mid_t mid_table_t::newMID(ModelType type) {
-    mid_t newmid = id_allocator.getNewId();
+    mid_t newmid = m_table.back();
 
     midTableEntry entry = {newmid, type};
     m_table.push_back(entry);

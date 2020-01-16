@@ -10,15 +10,15 @@ TestRepeater::TestRepeater(GNS_Scenario * scn) : GNS_Model(scn) {
 }
 
 void TestRepeater::HandleEvent(GNS_Event * event) {
-    if (event->EventType == 2) {
+    if (event->EventType == GNS_TIMER_NEW) {
         std::cout << "Handling event generated in model " 
                   << event->srcNode << ". eid = " 
-                  << event->Eid << ". Sim time: " 
+                  << event->eid << ". Sim time: " 
                   << MyScn->SimClock() << ".\n";
         std::cout << "Processing...\n" << std::endl;
         sleep(2);
     }
     
-    auto replyEvent = GenerateNewEvent(Mid, event->srcNode, 1000);
+    auto replyEvent = GenerateNewEvent(mid, event->srcNode, 1000);
     MyScn->NewEvent(replyEvent);
 }

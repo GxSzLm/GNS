@@ -9,7 +9,7 @@ GNS_Packet::~GNS_Packet() {
 }
 
 GNS_Packet *GNS_Packet::copy() {
-
+    return nullptr;
 }
 
 void * const GNS_Packet::peekHeader() {

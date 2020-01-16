@@ -22,7 +22,8 @@ GNS_Scenario::~GNS_Scenario() {
 
 int GNS_Scenario::SimInit() {
     nodes_init();
-    scn_models_init();2/ 
+    scn_models_init();
+    return 0;
 }
 
 int GNS_Scenario::SimRun() {
@@ -38,10 +39,11 @@ int GNS_Scenario::SimRun() {
         delete event;
         event = nullptr;
     }
+    return 0;
 }
 
 int GNS_Scenario::SimStop() {
-    
+    return 0;
 }
 
 int GNS_Scenario::NewEvent(GNS_Event * event) {

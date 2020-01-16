@@ -24,7 +24,7 @@ GNS_Event * EventQ::retrieveNextEvent() {
 int EventQ::AddEvent(GNS_Event * new_event) {
     new_event->expireTime = myScn->SimClock() + new_event->trigDelay;
     auto iter = e_queue.begin();
-    for (iter; iter != e_queue.end(); ++iter) {
+    for (; iter != e_queue.end(); ++iter) {
         if ((*iter)->expireTime >= new_event->expireTime) {
             break;
         }
